@@ -1,0 +1,77 @@
+name: Build and push Docker image
+
+# Triggers:
+#   * push to main that touches the Dockerfile (or related files), OR
+#   * manual dispatch (select the tag scheme).
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'Dockerfile'
+      - '.github/workflows/docker-publish.yml'
+      - 'bin/**'
+      - 'modules/**'
+      - 'conf/**'
+      - 'nextflow.config'
+      - 'main.nf'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Image tag to push (e.g. latest, 0.1.0, sha-deadbeef)'
+        required: false
+        default: 'latest'
+        type: string
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_BASE: ghcr.io/${{ github.repository }}
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    name: Build & push pals_celloracle
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.IMAGE_BASE }}
+          tags: |
+            type=raw,value=${{ github.event.inputs.tag || 'latest' }}
+            type=raw,value=${{ github.sha }}
+            type=raw,value=sha-${{ github.sha }}
+            type=schedule,pattern=nightly
+          labels: |
+            org.opencontainers.image.title=pals_celloracle
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
+            org.opencontainers.image.licenses=MIT
+            
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha,scope=pals_celloracle
+          cache-to:   type=gha,mode=max,scope=pals_celloracle
+          platforms: linux/amd64
