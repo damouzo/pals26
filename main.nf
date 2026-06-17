@@ -1,9 +1,9 @@
 #!/usr/bin/env nextflow
 /*
  * ========================================================================================
- *  pals_celloracle — Nextflow (DSL2) port of the CellOracle scvelo-pancreas tutorial
+ *  pals26 — Nextflow (DSL2) port of the CellOracle scvelo-pancreas tutorial
  * ========================================================================================
- *  Github   : https://github.com/BCI-KRP/pals_celloracle
+ *  Github   : https://github.com/damouzo/pals26
  *  Tutorial : https://github.com/morris-lab/CellOracle
  *  Nextflow : https://www.nextflow.io/docs/latest/index.html
  * ----------------------------------------------------------------------------------------

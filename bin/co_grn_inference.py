@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-co_grn_inference.py — Step 3 of the pals_celloracle pipeline.
+co_grn_inference.py — Step 3 of the pals26 pipeline.
 
 Builds a CellOracle Oracle object from the pre-processed AnnData,
 imports the mouse scATAC base GRN, performs KNN-imputation, fits

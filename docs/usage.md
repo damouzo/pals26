@@ -51,7 +51,7 @@ nextflow run main.nf -profile test
 | `--perturb_value`        | `0.0`                                  | Target expression of the perturbed TF         |
 | `--p_mass_n_grid`        | `40`                                   | Grid resolution for the perturbation field    |
 | `--p_mass_min_mass`      | `6.2`                                  | Mass cutoff for informative grid points       |
-| `--celloracle_container` | `ghcr.io/<owner>/pals_celloracle:latest` | Override the published image                |
+| `--celloracle_container` | `ghcr.io/<owner>/pals26:latest` | Override the published image                |
 | `--help`                 | —                                      | Print the CLI help and exit                   |
 
 Any of these can be supplied on the command line or as environment
@@ -99,5 +99,5 @@ nextflow run main.nf -profile local \
 ## 7. Help & support
 
 * Run `nextflow run main.nf --help` for a quick reminder.
-* Open an issue on GitHub: <https://github.com/BCI-KRP/pals_celloracle/issues>
+* Open an issue on GitHub: <https://github.com/damouzo/pals26/issues>
 * Nextflow documentation: <https://www.nextflow.io/docs/latest/index.html>

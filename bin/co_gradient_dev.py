@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-co_gradient_dev.py — Step 5 of the pals_celloracle pipeline.
+co_gradient_dev.py — Step 5 of the pals26 pipeline.
 
 Loads the perturbed Oracle, attaches the pseudotime computed in step 2,
 builds a Gradient_calculator on the same grid as the perturbation

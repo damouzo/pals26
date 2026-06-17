@@ -1,5 +1,5 @@
 # =====================================================================================
-#  pals_celloracle — reproducible environment
+#  pals26 — reproducible environment
 # -------------------------------------------------------------------------------------
 #  Python 3.8 is pinned because CellOracle (latest published release) is built and
 #  tested against 3.8; later Python versions break the bundled C extensions.
@@ -7,9 +7,9 @@
 # =====================================================================================
 FROM condaforge/miniforge3:latest AS build
 
-LABEL org.opencontainers.image.title="pals_celloracle" \
+LABEL org.opencontainers.image.title="pals26" \
       org.opencontainers.image.description="Reproducible Nextflow environment for the CellOracle scvelo-pancreas tutorial" \
-      org.opencontainers.image.source="https://github.com/BCI-KRP/pals_celloracle" \
+      org.opencontainers.image.source="https://github.com/damouzo/pals26" \
       org.opencontainers.image.licenses="MIT"
 
 ENV LANG=C.UTF-8 \

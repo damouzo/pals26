@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-co_pseudotime.py — Step 2 of the pals_celloracle pipeline.
+co_pseudotime.py — Step 2 of the pals26 pipeline.
 
 Loads the pre-processed AnnData, infers a diffusion-pseudotime
 trajectory using CellOracle's Pseudotime_calculator, and writes

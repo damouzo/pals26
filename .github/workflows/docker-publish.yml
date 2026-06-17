@@ -33,7 +33,7 @@ permissions:
 
 jobs:
   build:
-    name: Build & push pals_celloracle
+    name: Build & push pals26
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -57,7 +57,7 @@ jobs:
             type=raw,value=sha-${{ github.sha }}
             type=schedule,pattern=nightly
           labels: |
-            org.opencontainers.image.title=pals_celloracle
+            org.opencontainers.image.title=pals26
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
             org.opencontainers.image.licenses=MIT
             
@@ -72,6 +72,6 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha,scope=pals_celloracle
-          cache-to:   type=gha,mode=max,scope=pals_celloracle
+          cache-from: type=gha,scope=pals26
+          cache-to:   type=gha,mode=max,scope=pals26
           platforms: linux/amd64

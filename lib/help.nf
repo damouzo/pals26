@@ -10,7 +10,7 @@
 def helpMessage() {
     log.info"""
     =============================================================
-     pals_celloracle v${workflow.manifest.version} — CellOracle tutorial, Nextflow-style
+     pals26 v${workflow.manifest.version} — CellOracle tutorial, Nextflow-style
     =============================================================
 
      Required arguments:
@@ -37,7 +37,7 @@ def helpMessage() {
      I/O & runtime:
        --outdir                Output directory                              [default: ./results]
        --publish_dir_mode      'copy' | 'symlink' | 'link'                   [default: copy]
-       --celloracle_container  Override the container image                  [default: ghcr.io/damouzo/pals_celloracle:latest]
+       --celloracle_container  Override the container image                  [default: ghcr.io/damouzo/pals26:latest]
 
      Profiles:
        local        Run on a single workstation (Docker).
@@ -56,7 +56,7 @@ def helpMessage() {
 def logRunSummary() {
     log.info """
     =============================================================
-     pals_celloracle v${workflow.manifest.version}
+     pals26 v${workflow.manifest.version}
     =============================================================
      Output directory   : ${params.outdir}
      Container          : ${params.celloracle_container}

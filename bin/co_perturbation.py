@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-co_perturbation.py — Step 4 of the pals_celloracle pipeline.
+co_perturbation.py — Step 4 of the pals26 pipeline.
 
 Takes the trained Oracle + Links objects, perturbs a transcription
 factor (default: knock-out of Mafb), and propagates the perturbation

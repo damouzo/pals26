@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-co_data_prep.py — Step 1 of the pals_celloracle pipeline.
+co_data_prep.py — Step 1 of the pals26 pipeline.
 
 Loads the scvelo pancreas dataset, normalises, log-transforms, selects
 highly-variable genes, computes PCA / neighbours / Leiden / UMAP, and

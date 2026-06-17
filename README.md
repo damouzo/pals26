@@ -1,4 +1,4 @@
-# pals_celloracle
+# pals26
 
 > Educational Nextflow (DSL2) implementation of the
 > [CellOracle](https://github.com/morris-lab/CellOracle) **scvelo-pancreas** tutorial.
@@ -58,9 +58,9 @@ module load nextflow
 export NXF_SINGULARITY_CACHEDIR=$PWD/work/singularity
 mkdir -p "$NXF_SINGULARITY_CACHEDIR"
 GOMAXPROCS=1 singularity pull \
-    "$NXF_SINGULARITY_CACHEDIR/pals_celloracle-latest.sif" \
-    docker://ghcr.io/bci-krp/pals_celloracle:latest
-export CELLORACLE_CONTAINER="$NXF_SINGULARITY_CACHEDIR/pals_celloracle-latest.sif"
+    "$NXF_SINGULARITY_CACHEDIR/pals26-latest.sif" \
+    docker://ghcr.io/damouzo/pals26:latest
+export CELLORACLE_CONTAINER="$NXF_SINGULARITY_CACHEDIR/pals26-latest.sif"
 nextflow run main.nf -profile apocrita,singularity
 ```
 
