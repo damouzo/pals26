@@ -81,12 +81,12 @@ def main() -> None:
     )
 
     #Plots
-    # 1. Gráfico UMAP de la expresión de Mafb imputada
+    # 1. UMAP plot of imputed Mafb expression
     sc.pl.umap(oracle.adata, color=[args.perturb_tf], layer="imputed_count", show=False)
     plt.savefig(Path(args.output_oracle).parent / f"umap_imputed_{args.perturb_tf}.png", dpi=300)
     plt.close()
 
-    # 2. Flechas de Simulación real vs Randomizada (Quiver Plots)
+    # 2. Real vs randomized simulation arrows (Quiver Plots)
     fig, ax = plt.subplots(1, 2, figsize=[13, 6])
     scale = 30 
     oracle.plot_quiver(scale=scale, ax=ax[0])
