@@ -9,7 +9,7 @@
  * ----------------------------------------------------------------------------------------
  *  Usage
  *    nextflow run main.nf -profile local                 # laptop/workstation
- *    nextflow run main.nf -profile apocrita              # QMUL Apocrita SLURM cluster
+ *    nextflow run main.nf -profile cluster               # SLURM cluster (generic)
  *    nextflow run main.nf --help                         # show this help text
  * ----------------------------------------------------------------------------------------
  */

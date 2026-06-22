@@ -41,7 +41,7 @@ def helpMessage() {
 
      Profiles:
        local        Run on a single workstation (Docker).
-      apocrita     Run on QMUL's Apocrita cluster (SLURM only).
+      cluster      Run on a SLURM cluster (generic).
       singularity  Singularity runtime settings and cache handling.
        test         Tiny smoke run with reduced resources.
 

@@ -2,7 +2,11 @@
 .nextflow/
 .nextflow.log*
 work/
+work_*/
+*_work/
 results/
+results_*/
+*_results/
 *.nf.test*
 
 # Python

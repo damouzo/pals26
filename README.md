@@ -1,76 +1,73 @@
 # pals26
 
-> Educational Nextflow (DSL2) implementation of the
-> [CellOracle](https://github.com/morris-lab/CellOracle) **scvelo-pancreas** tutorial.
-> Built for the PALS 2026 course.
+Nextflow of the CellOracle tutorial for the PALS 2026 course. It takes a scRNA-seq dataset, infers a Gene Regulatory Network with CellOracle, runs an in-silico knock-out (Mafb by default) and projects the result onto a pseudotime-aware development field.
 
-The pipeline takes a single-cell RNA-seq dataset (default: scvelo's `pancreas`),
-infers a Gene Regulatory Network with CellOracle, performs an in-silico
-perturbation (`Mafb` knock-out by default) and projects the result onto a
-pseudotime-aware development field.
+## Requirements
 
----
+- [Git](https://git-scm.com/install/)
+- Java 17 or newer
+- [Nextflow](https://docs.seqera.io/nextflow/install) (>= 23.10.0)
+- A container runtime: [Docker](https://docs.docker.com/engine/install/) for your laptop, or Singularity/Apptainer if you are running on an HPC
 
-## Quick start
+## Install
+
+### Nextflow
+
+Nextflow needs Java 17. If you don't have it yet, the easiest way is via [SDKMAN!](https://sdkman.io/):
 
 ```bash
-# Workstation (Docker)
+curl -s https://get.sdkman.io | bash   # then open a new terminal
+sdk install java 17.0.10-tem
+```
+
+Then install Nextflow itself:
+
+```bash
+curl -s https://get.nextflow.io | bash
+mkdir -p $HOME/.local/bin
+mv nextflow $HOME/.local/bin/
+export PATH="$PATH:$HOME/.local/bin"   # add this to your ~/.bashrc or ~/.zshrc
+```
+
+Check that everything is wired up:
+
+```bash
+java -version
+nextflow -version
+```
+
+See the [official install guide](https://docs.seqera.io/nextflow/install) for other options (Conda, standalone, Windows/WSL, etc.).
+
+## Run
+
+### On your laptop (Docker)
+
+```bash
 nextflow run main.nf -profile local
 ```
 
-> **Minimum hardware (laptop / `-profile local`):** 2 CPUs and 6 GB of
-> free RAM. The scvelo `pancreas` dataset is small (~3.6k cells,
-> ~2k HVGs) and fits comfortably inside that envelope. If you have less
-> than 6 GB free, override per-run:
->
-> ```bash
-> nextflow run main.nf -profile local --executor.memory '4 GB'
-> ```
->
-> For a beefier workstation (4+ CPUs, 16+ GB) just bump the `local`
-> profile block in `nextflow.config` (executor ceiling and the
-> `celloracle` label).
+The `local` profile in `nextflow.config` defaults to 2 CPUs and 6 GB of RAM, which is enough for the scvelo `pancreas` dataset. If your machine is beefier, bump the `executor` and `celloracle` label blocks in `nextflow.config`. If you are tight on RAM, lower it per-run:
 
 ```bash
-# QMUL Apocrita HPC (SLURM + Singularity runtime)
-nextflow run main.nf -profile apocrita,singularity
+nextflow run main.nf -profile local --executor.memory '4 GB'
 ```
 
-### Container on Apocrita (pre-download recommended)
-
-Singularity's Go runtime fans out dozens of goroutines while pulling and
-unpacking OCI layers. On a shared login node this can exhaust the per-user
-thread limit and crash with:
-
-```
-runtime/cgo: pthread_create failed: Resource temporarily unavailable
-```
-
-The pipeline uses a local Singularity cache under `work/singularity/`
-and raises `pullTimeout` to 60 min to mitigate this. If the pull still
-fails, pre-download the SIF once on a compute node and point
-`CELLORACLE_CONTAINER` at the local file — Nextflow will then skip the
-registry entirely:
+### On a SLURM cluster (Singularity/Apptainer)
 
 ```bash
-srun --cpus-per-task=4 --mem=16G --pty bash
-module load nextflow
-export NXF_SINGULARITY_CACHEDIR=$PWD/work/singularity
-mkdir -p "$NXF_SINGULARITY_CACHEDIR"
-GOMAXPROCS=1 singularity pull \
-    "$NXF_SINGULARITY_CACHEDIR/pals26-latest.sif" \
-    docker://ghcr.io/damouzo/pals26:latest
-export CELLORACLE_CONTAINER="$NXF_SINGULARITY_CACHEDIR/pals26-latest.sif"
-nextflow run main.nf -profile apocrita,singularity
+nextflow run main.nf -profile cluster,singularity
 ```
 
-# Show all options
+The `cluster` profile uses SLURM with 4 CPUs, 32 GB RAM and a 4 h walltime per task. Tweak `nextflow.config` to match your scheduler and quotas.
+
+## Data
+
+The scvelo `pancreas` dataset and the CellOracle base GRN are downloaded automatically on the first run, so you don't need to fetch anything by hand.
+
+## Help
+
+```bash
 nextflow run main.nf --help
 ```
 
-The pipeline is fully self-contained: the scvelo dataset and the
-CellOracle base GRN are downloaded automatically on first run.
-
----
-
-
+More detail in [`docs/usage.md`](docs/usage.md) and the per-step notes under [`docs/steps/`](docs/steps/).
