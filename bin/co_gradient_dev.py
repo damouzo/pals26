@@ -80,10 +80,13 @@ def main() -> None:
     fig, ax = plt.subplots(figsize=[6, 6])
     dev.plot_inner_product_on_grid(vm=1, s=50, ax=ax)
     dev.plot_simulation_flow_on_grid(scale=30, show_background=False, ax=ax)
-    norm = colors.Normalize(vmin=-1, vmax=1)
-    sm = cm.ScalarMappable(cmap="PiYG_r", norm=norm) # PiYG_r: green (+), pink (-)
+    norm = colors.TwoSlopeNorm(vmin=-1, vcenter=0, vmax=1)
+    sm = cm.ScalarMappable(cmap="PiYG", norm=norm)  # PiYG: pink (-1, anti-dev) -> green (+1, pro-dev)
     sm.set_array([])
-    fig.colorbar(sm, ax=ax, label="Inner Product Score (Green: Pro-development | Pink: Anti-development )")
+    fig.colorbar(
+        sm, ax=ax,
+        label="Inner Product Score  (green = pro-development, pink = anti-development)",
+    )
     plt.tight_layout()
     plt.savefig(args.output_plot, dpi=300)
     plt.close()
