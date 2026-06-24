@@ -42,7 +42,7 @@ path_genome_ref = os.path.join(var['Path']['genome_ref'])
 
 # ==== Data Preprocessing =========================================================
 # Load scATAC-seq data
-adata = sc.read_h5ad(os.path.join(path_rawdata, 'HSC_5BM_ATAC.h5ad'))
+adata = sc.read_h5ad(os.path.join(path_rawdata, 'object_ATAC.h5ad'))
 adata.layers['counts'] = adata.raw.X.copy()
 adata.layers['norm'] = adata.X.copy()
 peaks = adata.var.index.to_numpy()
@@ -112,7 +112,7 @@ df.to_parquet(os.path.join(path_output, f"base_GRN_dataframe_{motif_db_option}.p
 
 # ==== Oracle Object Creation =====================================================
 # Load scRNA-seq data
-adata = sc.read_h5ad(os.path.join(path_rawdata, 'HSC_5BM_RNA.h5ad'))
+adata = sc.read_h5ad(os.path.join(path_rawdata, 'object_RNA.h5ad'))
 adata.layers['counts'] = adata.raw.X.copy()
 adata.layers['norm'] = adata.X.copy()
 
@@ -168,66 +168,26 @@ links.to_hdf5(file_path=os.path.join(path_output, f"selected_links_{motif_db_opt
 links.plot_scores_as_rank(cluster=links.cluster[0], n_gene=30, save=os.path.join(path_plot, f"Network_ranked_score"))
 links.plot_score_comparison_2D(
     value="degree_centrality_all",
-    cluster1="qLT_HSC", cluster2="aLT_HSC",
+    cluster1="CelltypeA", cluster2="CelltypeB",
     percentile=98, save=os.path.join(path_plot, f"score_comparison")
 )
 plt.clf()
-                               
-links.plot_score_comparison_2D(
-    value="degree_centrality_all",
-    cluster1="aLT_HSC", cluster2="ST_HSC",
-    percentile=98, save=os.path.join(path_plot, f"score_comparison")
-)
-plt.clf()
-                               
-links.plot_score_comparison_2D(
-    value="degree_centrality_all",
-    cluster1="qLT_HSC", cluster2="ST_HSC",
-    percentile=98, save=os.path.join(path_plot, f"score_comparison")
-)
-plt.clf()      
+
 # -------------------------- degree centrality in 
 links.plot_score_comparison_2D(
     value="degree_centrality_in",
-    cluster1="qLT_HSC", cluster2="aLT_HSC",
+    cluster1="CelltypeA", cluster2="CelltypeB",
     percentile=98, save=os.path.join(path_plot, f"score_comparison")
 )
 plt.clf()
-                               
-links.plot_score_comparison_2D(
-    value="degree_centrality_in",
-    cluster1="aLT_HSC", cluster2="ST_HSC",
-    percentile=98, save=os.path.join(path_plot, f"score_comparison")
-)
-plt.clf()
-                               
-links.plot_score_comparison_2D(
-    value="degree_centrality_in",
-    cluster1="qLT_HSC", cluster2="ST_HSC",
-    percentile=98, save=os.path.join(path_plot, f"score_comparison")
-)
-plt.clf()      
+    
 # -------------------------- degree centrality out
 links.plot_score_comparison_2D(
     value="degree_centrality_out",
-    cluster1="qLT_HSC", cluster2="aLT_HSC",
+    cluster1="CelltypeA", cluster2="CelltypeB",
     percentile=98, save=os.path.join(path_plot, f"score_comparison")
 )
-plt.clf()
-                               
-links.plot_score_comparison_2D(
-    value="degree_centrality_out",
-    cluster1="aLT_HSC", cluster2="ST_HSC",
-    percentile=98, save=os.path.join(path_plot, f"score_comparison")
-)
-plt.clf()
-                               
-links.plot_score_comparison_2D(
-    value="degree_centrality_all",
-    cluster1="qLT_HSC", cluster2="ST_HSC",
-    percentile=98, save=os.path.join(path_plot, f"score_comparison")
-)
-plt.clf()
+
   # KNN imputation
 n_cell = oracle.adata.shape[0]
 print(f"cell number is :{n_cell}")
@@ -302,55 +262,13 @@ links.to_hdf5(file_path=os.path.join(path_output,f"selected_links_{motif_db_opti
 links.cluster
   # Visualize top n-th genes that have high scores.
 links.plot_scores_as_rank(cluster=links.cluster[0], n_gene=30, save=os.path.join(path_plot, f"Network_ranked_score"))
-links.plot_scores_as_rank(cluster=links.cluster[1], n_gene=30, save=os.path.join(path_plot, f"Network_ranked_score"))
-links.plot_scores_as_rank(cluster=links.cluster[2], n_gene=30, save=os.path.join(path_plot, f"Network_ranked_score"))
 
 # Network score comparison between two clusters
 plt.figure(figsize=(4,6)) 
 plt.rcParams.update({'font.size': 10}) 
 plt.ticklabel_format(style='sci',axis='y',scilimits=(0,0))
 links.plot_score_comparison_2D(value="degree_centrality_all",
-                               cluster1="qLT_HSC", cluster2="aLT_HSC", 
+                               cluster1="celltypeA", cluster2="CelltypeB", 
                                percentile=98, save=os.path.join(path_plot, f"score_comparison"))
 plt.clf()
                                
-links.plot_score_comparison_2D(value="degree_centrality_all",
-                               cluster1="aLT_HSC", cluster2="ST_HSC", 
-                               percentile=98, save=os.path.join(path_plot, f"score_comparison"))
-plt.clf()
-                               
-links.plot_score_comparison_2D(value="degree_centrality_all",
-                               cluster1="qLT_HSC", cluster2="ST_HSC", 
-                               percentile=98, save=os.path.join(path_plot, f"score_comparison"))
-plt.clf()      
-# -------------------------- degree centrality in 
-links.plot_score_comparison_2D(value="degree_centrality_in",
-                               cluster1="qLT_HSC", cluster2="aLT_HSC", 
-                               percentile=98, save=os.path.join(path_plot, f"score_comparison"))
-plt.clf()
-                               
-links.plot_score_comparison_2D(value="degree_centrality_in",
-                               cluster1="aLT_HSC", cluster2="ST_HSC", 
-                               percentile=98, save=os.path.join(path_plot, f"score_comparison"))
-plt.clf()
-                               
-links.plot_score_comparison_2D(value="degree_centrality_in",
-                               cluster1="qLT_HSC", cluster2="ST_HSC", 
-                               percentile=98, save=os.path.join(path_plot, f"score_comparison"))
-plt.clf()      
-# -------------------------- degree centrality out
-links.plot_score_comparison_2D(value="degree_centrality_out",
-                               cluster1="qLT_HSC", cluster2="aLT_HSC", 
-                               percentile=98, save=os.path.join(path_plot, f"score_comparison"))
-plt.clf()
-                               
-links.plot_score_comparison_2D(value="degree_centrality_out",
-                               cluster1="aLT_HSC", cluster2="ST_HSC", 
-                               percentile=98, save=os.path.join(path_plot, f"score_comparison"))
-plt.clf()
-                               
-links.plot_score_comparison_2D(value="degree_centrality_all",
-                               cluster1="qLT_HSC", cluster2="ST_HSC", 
-                               percentile=98, save=os.path.join(path_plot, f"score_comparison"))
-plt.clf()    
-

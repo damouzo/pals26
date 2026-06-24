@@ -86,14 +86,6 @@ dev.off()
 pdf(paste0(path_plot, "Stemnes_UMAP_Multiome.pdf"), width = 8, height = 8)
 FeaturePlot(SeuObj, reduction = "umap_multiome", features = "Weighted_bins", label = TRUE, label.size = 3) +
     scale_colour_gradientn(colours = rev(brewer.pal(n = 11, name = "RdBu")))
-FeaturePlot(SeuObj, reduction = "umap_multiome", features = "Score_Laurenti_LT_HSC", label = TRUE, label.size = 3) +
-    scale_colour_gradientn(colours = rev(brewer.pal(n = 11, name = "RdBu")))
-FeaturePlot(SeuObj, reduction = "umap_multiome", features = "Score_Laurenti_ST_HSC", label = TRUE, label.size = 3) +
-    scale_colour_gradientn(colours = rev(brewer.pal(n = 11, name = "RdBu")))
-FeaturePlot(SeuObj, reduction = "umap_multiome", features = "Score_Renewal_Increase", label = TRUE, label.size = 3) +
-    scale_colour_gradientn(colours = rev(brewer.pal(n = 11, name = "RdBu")))
-FeaturePlot(SeuObj, reduction = "umap_multiome", features = "Score_Renewal_Decrease", label = TRUE, label.size = 3) +
-    scale_colour_gradientn(colours = rev(brewer.pal(n = 11, name = "RdBu")))
 dev.off()
 
 # General feature plots.
